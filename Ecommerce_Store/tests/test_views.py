@@ -6,7 +6,7 @@ from django.test import Client, RequestFactory, TestCase
 from django.urls.base import reverse
 
 from Ecommerce_Store.models import Category, Product
-from Ecommerce_Store.views import all_products
+from Ecommerce_Store.views import product_all
 
 
 class TestViewResponses(TestCase):
@@ -19,10 +19,14 @@ class TestViewResponses(TestCase):
 
     def test_url_allowed_hosts(self):
         """
-        Test hosts allowed
+        Test hosts allowed to use this web-application
         """
         response = self.c.get('/')
         self.assertEqual(response.status_code, 200)
+        response = self.c.get('/', HTTP_HOST='mydomain.com')
+        self.assertEqual(response.status_code, 200)
+        response = self.c.get('/', HTTP_HOST='mydomaine.com')
+        self.assertEqual(response.status_code, 400)
 
     def test_product_detail_url(self):
         """
@@ -40,17 +44,17 @@ class TestViewResponses(TestCase):
 
     def test_homepage_html(self):
         request = HttpRequest()
-        response = all_products(request)
+        response = product_all(request)
         html = response.content.decode('utf8')
         print(html)
-        self.assertIn('<title>  Home  </title>', html)
+        self.assertIn('<title>  Store  </title>', html)
         self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
 
     def test_view_function(self):
         request = self.factory.get('product/Chemise-Bleu')
-        response = all_products(request)
+        response = product_all(request)
         html = response.content.decode('utf8')
-        self.assertIn('<title>  Home  </title>', html)
+        self.assertIn('<title>  Store  </title>', html)
         self.assertTrue(html.startswith('\n<!DOCTYPE html>\n'))
         self.assertEqual(response.status_code, 200)
