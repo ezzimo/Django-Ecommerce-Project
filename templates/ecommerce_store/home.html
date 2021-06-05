@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<main>
+<div class="container">
 <div class="pb-3 h5"> All Products </div>
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
   {% for product in products %}
@@ -27,4 +29,6 @@
   </div>
   {% endfor %}
 </div>
+</div>
+</main>
 {% endblock  %}

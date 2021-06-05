@@ -8,7 +8,7 @@ from Ecommerce_Store.models import Product
 
 def cart_summary(request):
     cart = Cart(request)
-    return render(request, 'ecommerce_store/cart/summary.html', {'cart': cart})
+    return render(request, 'cart/summary.html', {'cart': cart})
 
 
 def cart_add(request):
