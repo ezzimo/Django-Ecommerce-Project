@@ -19,7 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Ecommerce_Store',
-    'cart'
+    'cart',
+    'django_countries',
+    "account",
 ]
 
 MIDDLEWARE = [
@@ -98,3 +100,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# Customized user model
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+#activation email setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
