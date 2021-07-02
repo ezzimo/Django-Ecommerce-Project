@@ -1,3 +1,4 @@
+from orders.models import Order
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -9,14 +10,16 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from .forms import RegistrationForm, UserEditForm
+from orders.views import user_orders
 from .models import UserBase
 from .token import account_activation_token
 
 
 @login_required
 def dashboard(request):
+    orders = user_orders(request)
     return render(request,
-                   'account/user/dashboard.html')
+                   'account/user/dashboard.html', {'orders': orders})
 
 @login_required
 def edit_details(request):

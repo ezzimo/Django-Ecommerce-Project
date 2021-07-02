@@ -4,11 +4,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = '+j407t_$m*$hgr)yd5t&^fae3cot!*^+9@hwh+t9i^sw2$rlo0'
+SECRET_KEY = ''
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['mydomain.com', '127.0.0.1']
+ALLOWED_HOSTS = ['mydomain.com', '127.0.0.1', 'localhost']
 
 
 INSTALLED_APPS = [
@@ -21,7 +21,9 @@ INSTALLED_APPS = [
     'Ecommerce_Store',
     'cart',
     'django_countries',
-    "account",
+    'account',
+    'payment',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -98,6 +100,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+
+# Cart session ID
+CART_SESSION_ID = 'cart'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Customized user model
@@ -107,3 +113,10 @@ LOGIN_URL = '/account/login/'
 
 #activation email setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Stripe Payment
+PUBLISHABLE_KEY = ''
+SECRET_KEY = ''
+STRIPE_ENDPOINT_SECRET = ''
+
+# Stripe listen --forward-to localhost:8000/payment/webhook/
