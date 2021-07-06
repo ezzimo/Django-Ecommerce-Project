@@ -1,9 +1,9 @@
-from django.http import response
-from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+
+from Ecommerce_Store.models import Product
 
 from .cart import Cart
-from Ecommerce_Store.models import Product
 
 
 def cart_summary(request):
@@ -32,6 +32,7 @@ def cart_delete(request):
         carttotal = cart.get_total_price()
         response = JsonResponse({'Success': True, 'qty': cartqty, 'total': carttotal})
         return response
+
 
 def cart_update(request):
     cart = Cart(request)

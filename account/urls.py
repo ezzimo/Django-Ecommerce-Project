@@ -1,18 +1,18 @@
 from django.contrib.auth import views as auth_views
-from django.urls import include, path
+from django.urls import path
 from django.views.generic import TemplateView
 
-from .forms import (UserLoginForm, PwdResetForm, PwdResetConfirmForm)
 from . import views
+from .forms import PwdResetConfirmForm, PwdResetForm, UserLoginForm
 
 app_name = 'account'
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='account/registration/login.html', form_class=UserLoginForm), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/account/login/'),name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/account/login/'), name='logout'),
     path('register/', views.account_register, name='register'),
     path('activate/<slug:uidb64>/<slug:token>/', views.account_activate, name='activate'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="account/user/password_reset_form.html", 
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name="account/user/password_reset_form.html",
                                                                     success_url='password_reset_email_confirm',
                                                                     email_template_name='account/user/password_reset_email.html',
                                                                     form_class=PwdResetForm), name='pwdreset'),

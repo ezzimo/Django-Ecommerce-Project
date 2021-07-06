@@ -1,12 +1,9 @@
-from django.shortcuts import render
 from django.http.response import JsonResponse
 
-from django.http import response
-from Ecommerce_Store.models import Product
-from django.shortcuts import render
-
 from cart.cart import Cart
+
 from .models import Order, OrderItem
+
 
 def add(request):
     cart = Cart(request)
@@ -16,12 +13,11 @@ def add(request):
         order_key = request.POST.get('order_key')
         carttotal = cart.get_total_price()
 
-        #check the order existance
+#        #check the order existance
         if Order.objects.filter(order_key=order_key).exists():
             pass
         else:
-            order = Order.objects.create(user_id=user_id, full_name='name', address1='add1',
-                                address2='add2', total_paid=carttotal, order_key=order_key)
+            order = Order.objects.create(user_id=user_id, full_name='name', address1='add1', address2='add2', total_paid=carttotal, order_key=order_key)
             order_id = order.pk
             for item in cart:
                 OrderItem.objects.create(order_id=order_id, product=item['product'], price=item['price'], quantity=item['qty'])
@@ -35,5 +31,5 @@ def payment_confirmation(data):
 
 def user_orders(request):
     user_id = request.user.id
-    orders  = Order.objects.filter(user_id=user_id).filter(billing_status=True)
+    orders = Order.objects.filter(user_id=user_id).filter(billing_status=True)
     return orders

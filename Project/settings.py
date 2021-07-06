@@ -111,10 +111,10 @@ AUTH_USER_MODEL = 'account.UserBase'
 LOGIN_REDIRECT_URL = '/account/dashboard'
 LOGIN_URL = '/account/login/'
 
-#activation email setting
+# activation email setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-#Stripe Payment
+# Stripe Payment
 PUBLISHABLE_KEY = ''
 SECRET_KEY = ''
 STRIPE_ENDPOINT_SECRET = ''

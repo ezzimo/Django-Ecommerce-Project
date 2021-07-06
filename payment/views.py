@@ -1,13 +1,14 @@
-import stripe 
 import json
 
-from django.shortcuts import render
-from django.http.response import HttpResponse
+import stripe
 from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponse
+from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from cart.cart import Cart
 from orders.views import payment_confirmation
+
 
 @login_required
 def CartView(request):
@@ -22,9 +23,10 @@ def CartView(request):
     intent = stripe.PaymentIntent.create(
         amount=total,
         currency='gbp',
-        metadata={'userid':request.user.id}
+        metadata={'userid': request.user.id}
     )
     return render(request, 'payment/home.html', {'client_secret': intent.client_secret})
+
 
 @csrf_exempt
 def stripe_webhook(request):

@@ -1,6 +1,4 @@
 from django.contrib.auth.models import User
-from django.db import reset_queries
-from django.http import response
 from django.test import TestCase
 from django.urls import reverse
 
@@ -15,10 +13,10 @@ class TestCartView(TestCase):
         Product.objects.create(category_id=1, title='Chemise Rouge', created_by_id=1, slug='Chemise-Bleu', price='10.00', image='chemise')
         Product.objects.create(category_id=1, title='Chemise Vert', created_by_id=1, slug='Chemise-Bleu', price='10.00', image='chemise')
         self.client.post(
-            reverse('cart:cart_add'), {"productid": 1,"productqty": 1,"action":"post"}, xhr=True)
+            reverse('cart:cart_add'), {"productid": 1, "productqty": 1, "action": "post"}, xhr=True)
         self.client.post(
-            reverse('cart:cart_add'), {"productid": 2,"productqty": 2,"action":"post"}, xhr=True)
-    
+            reverse('cart:cart_add'), {"productid": 2, "productqty": 2, "action": "post"}, xhr=True)
+
     def test_cart_url(self):
         """
         Test homepage response status
@@ -50,6 +48,5 @@ class TestCartView(TestCase):
         Test updating of product in the cart
         """
         response = self.client.post(
-            reverse('cart:cart_update'), {"productid": 2, "productqty": 1,"action": "post"}, xhr=True)
+            reverse('cart:cart_update'), {"productid": 2, "productqty": 1, "action": "post"}, xhr=True)
         self.assertEqual(response.json(), {'Success': True, 'qty': 2, 'subtotal': '10.00', 'total': '20.00'})
-

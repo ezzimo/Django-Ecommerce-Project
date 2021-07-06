@@ -1,6 +1,9 @@
-from Ecommerce_Store.models import Product
 from decimal import Decimal
+
 from django.conf import settings
+
+from Ecommerce_Store.models import Product
+
 
 class Cart():
     """
@@ -25,7 +28,7 @@ class Cart():
             self.cart[product_id]['qty'] = qty
         else:
             self.cart[product_id] = {'price': str(product.price), 'qty': int(qty)}
-        
+
         self.save()
 
     def __iter__(self):
@@ -65,7 +68,7 @@ class Cart():
         if product_id in self.cart:
             self.cart[product_id]['total_price'] = str(Decimal(self.cart[product_id]['price']) * self.cart[product_id]['qty'])
         return (self.cart[product_id]['total_price'])
-    
+
     def delete(self, product):
         """
         delete product from session cart data
@@ -91,4 +94,3 @@ class Cart():
         # remove session Cart data
         del self.session[settings.CART_SESSION_ID]
         self.save()
-        

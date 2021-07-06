@@ -1,4 +1,3 @@
-from decimal import Decimal
 from django.conf import settings
 from django.db import models
 
@@ -21,7 +20,7 @@ class Order(models.Model):
 
     class Meta:
         ordering = ('-created',)
-    
+
     def __str__(self):
         return str(self.created)
 
