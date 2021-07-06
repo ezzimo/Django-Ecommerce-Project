@@ -1,0 +1,12 @@
+.container {
+    max-width: 1000px
+}
+
+.select-dropdown {
+    width: 50px;
+    height: 40px;
+}
+
+.price-info{
+    padding: 10px;
+}

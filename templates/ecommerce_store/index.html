@@ -1,12 +1,13 @@
-{% extends './base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 {% block title %} Store {% endblock  %}
 
 {% block content %}
 
-<main>
 <div class="container">
 <div class="pb-3 h5"> All Products </div>
+{% if not products %}
+  <div class="col-12"> There currently any products to show </div>
+  {% else %}
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
   {% for product in products %}
   <div class="col">
@@ -29,6 +30,6 @@
   </div>
   {% endfor %}
 </div>
+{% endif %}
 </div>
-</main>
 {% endblock  %}
