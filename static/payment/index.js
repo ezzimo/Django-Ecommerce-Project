@@ -1,7 +1,7 @@
 
 
 
-var stripe = Stripe('pk_test_51J3thaFn1RW02wZLBQ09vkce2c71yAluBBB9GZh52xTnoidyntnT9i8zoUTHFVekV0wMmcFdfPDGsbDNHrrvAwPq00BocV5O17');
+var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
 var elem = document.getElementById('submit');
 clientsecret = elem.getAttribute('data-secret');
@@ -68,11 +68,12 @@ form.addEventListener('submit', function (ev) {
                 }
             }).then(function (result) {
                 if (result.error) {
-                    console.log('payment error')
+                    console.log('payment error');
                     console.log(result.error.message);
+                    window.location.replace("http://127.0.0.1:8000/payment/error/");
                 } else {
                     if (result.paymentIntent.status === 'succeeded') {
-                        console.log('payment processed')
+                        console.log('payment processed');
                         // There's a risk of the sustomer closing the window before collback execution.
                         // Set up a webhook or plugin to listen for the payment_intent.
                         // succeeded event that handles any business critical post-payment actions.

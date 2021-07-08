@@ -1,10 +1,13 @@
 import json
+import os
 
 import stripe
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import TemplateView
+from django.conf import settings
 
 from cart.cart import Cart
 from orders.views import payment_confirmation
@@ -19,13 +22,13 @@ def CartView(request):
     total = int(total)
     print('total')
 
-    stripe.api_key = ''
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     intent = stripe.PaymentIntent.create(
         amount=total,
         currency='gbp',
         metadata={'userid': request.user.id}
     )
-    return render(request, 'payment/home.html', {'client_secret': intent.client_secret})
+    return render(request, 'payment/home.html', {'client_secret': intent.client_secret, 'STRIPE_PUBLISHABLE_KEY': os.environ.get('STRIPE_PUBLISHABLE_KEY')})
 
 
 @csrf_exempt
@@ -49,6 +52,10 @@ def stripe_webhook(request):
         print('Unhandled event type {}'.format(event.type))
 
     return HttpResponse(status=200)
+
+
+class Error(TemplateView):
+    template_name = 'payment/error.html'
 
 
 def order_placed(request):
