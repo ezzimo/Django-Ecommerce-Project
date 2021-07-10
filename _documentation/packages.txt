@@ -1,0 +1,10 @@
+Package make_list:
+
+django
+black
+isort
+mptt
+pillow
+stripe
+coverage
+six

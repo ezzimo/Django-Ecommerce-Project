@@ -1,10 +1,13 @@
-asgiref @ file:///tmp/build/80754af9/asgiref_1602513567813/work
+asgiref==3.2.10
 certifi==2020.6.20
+chardet==4.0.0
 coverage==5.5
 Django @ file:///tmp/build/80754af9/django_1601563330930/work
 django-countries==7.2.1
+django-debug-toolbar==3.2.1
 flake8==3.9.2
 flake8-isort==4.0.0
+idna==2.10
 isort==5.8.0
 mccabe==0.6.1
 Pillow==8.2.0
@@ -12,6 +15,10 @@ psycopg2 @ file:///tmp/build/80754af9/psycopg2_1594305108220/work
 pycodestyle==2.7.0
 pyflakes==2.3.1
 pytz==2020.1
+requests==2.25.1
 six==1.16.0
 sqlparse @ file:///tmp/build/80754af9/sqlparse_1602184451250/work
+stripe==2.58.0
+stripe3==0.0.0
 testfixtures==6.17.1
+urllib3==1.26.6
