@@ -5,7 +5,7 @@ from django.conf import settings
 from Ecommerce_Store.models import Product
 
 
-class Cart():
+class Cart:
     """
     The base Cart classe, that provide some default functionalities which
     can be inherited or overrided if necessary.
@@ -25,9 +25,9 @@ class Cart():
         product_id = str(product.id)
 
         if product_id in self.cart:
-            self.cart[product_id]['qty'] = qty
+            self.cart[product_id]["qty"] = qty
         else:
-            self.cart[product_id] = {'price': str(product.price), 'qty': int(qty)}
+            self.cart[product_id] = {"price": str(product.price), "qty": int(qty)}
 
         self.save()
 
@@ -40,21 +40,21 @@ class Cart():
         products = Product.products.filter(id__in=product_ids)
         cart = self.cart.copy()
         for product in products:
-            cart[str(product.id)]['product'] = product
+            cart[str(product.id)]["product"] = product
 
         for item in cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['qty']
+            item["price"] = Decimal(item["price"])
+            item["total_price"] = item["price"] * item["qty"]
             yield item
 
     def __len__(self):
         """
         Get the cart data and count the number of products
         """
-        return sum(item['qty'] for item in self.cart.values())
+        return sum(item["qty"] for item in self.cart.values())
 
     def get_total_price(self):
-        subtotal = sum(Decimal(item['price']) * item['qty'] for item in self.cart.values())
+        subtotal = sum(Decimal(item["price"]) * item["qty"] for item in self.cart.values())
         if subtotal == 0:
             shipping = Decimal(0.00)
         else:
@@ -66,8 +66,10 @@ class Cart():
     def get_sub_total_price(self, product):
         product_id = str(product)
         if product_id in self.cart:
-            self.cart[product_id]['total_price'] = str(Decimal(self.cart[product_id]['price']) * self.cart[product_id]['qty'])
-        return (self.cart[product_id]['total_price'])
+            self.cart[product_id]["total_price"] = str(
+                Decimal(self.cart[product_id]["price"]) * self.cart[product_id]["qty"]
+            )
+        return self.cart[product_id]["total_price"]
 
     def delete(self, product):
         """
@@ -84,7 +86,7 @@ class Cart():
         """
         product_id = str(product)
         if product_id in self.cart:
-            self.cart[product_id]['qty'] = qty
+            self.cart[product_id]["qty"] = qty
         self.save()
 
     def save(self):
