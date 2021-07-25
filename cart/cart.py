@@ -1,7 +1,6 @@
 from decimal import Decimal
 
 from django.conf import settings
-
 from Ecommerce_Store.models import Product
 
 
@@ -27,7 +26,7 @@ class Cart:
         if product_id in self.cart:
             self.cart[product_id]["qty"] = qty
         else:
-            self.cart[product_id] = {"price": str(product.price), "qty": int(qty)}
+            self.cart[product_id] = {"price": str(product.regular_price), "qty": int(qty)}
 
         self.save()
 
@@ -37,7 +36,7 @@ class Cart:
         from database
         """
         product_ids = self.cart.keys()
-        products = Product.products.filter(id__in=product_ids)
+        products = Product.objects.filter(id__in=product_ids)
         cart = self.cart.copy()
         for product in products:
             cart[str(product.id)]["product"] = product

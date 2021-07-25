@@ -18,13 +18,18 @@
         </a>
       </div>
       <div class="card-body">
-        <img class="img-fluid" alt="{{ product.title}}" src="{{ product.image.url}}" width="650" height="350">
+      {% for image in product.product_image.all %}
+      {% if image.is_feature %}
+       <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="650" height="350" alt="{{image.image.alt_text}}">
+      {% endif %}
+      {% endfor %}
+       
         <div class="list-unstyled mt-3 mb-4">
           <p>
             {{product.description}}
           </p>
         </div>
-        <h1 class="card-title pricing-card-title">${{product.price}}</h1>
+        <h1 class="card-title pricing-card-title">${{product.regular_price}}</h1>
       </div>
     </div>
   </div>

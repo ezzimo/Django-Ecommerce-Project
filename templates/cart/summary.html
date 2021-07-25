@@ -24,8 +24,12 @@
         <div data-index="{{product.id}}" class="row mb-4 text-center shadow-sm border border-2 product-item">
             <div class="row g-0">
                 <div class="col-md-3 col-lg-2 order-md-first bg-light position-relative">
-                    <img class="img-fluid mx-auto d-block rounded" width="200px" alt="{{product.title}}"
-                        src="{{ product.image.url}}">
+                    {% for image in product.product_image.all %}
+                    {% if image.is_feature %}
+                    <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="650" height="350"
+                        alt="{{image.image.alt_text}}">
+                    {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="col-md-9 col-lg-10 ps-md-3 ps-lg-10">
                     <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-reset">
@@ -34,7 +38,7 @@
                     <div class="border">
                         <div class="col border-bottom">
                             <div class="row p-3">
-                                <div class="col-6">{{ product.title}}</div>
+                                <div class="col-6">{{ product.description}}</div>
                                 <div class="col-6 text-end">Sub Total: <span id="{{product.id}}"
                                         class="h4 d-inline-flex fw-bold">{{item.total_price }}</span><span
                                         class="fw-bold">DHs</span></div>
@@ -108,7 +112,7 @@
             <button class="btn btn-light" type="button">Save for later</button>
         </div>
     </div>
-        {% endif %}
+    {% endif %}
 
 </div>
 <script>
@@ -129,8 +133,8 @@
                 $('.product-item[data-index="' + prodid + '"]').remove();
                 document.getElementById("cart-qty").innerHTML = json.qty;
                 document.getElementById("total").innerHTML = json.total;
-                if (json.qty==0) {
-                    $("#MyCart").load(location.href+" #MyCart");
+                if (json.qty == 0) {
+                    $("#MyCart").load(location.href + " #MyCart");
                 }
             },
             error: function (xhr, errmsg, err) {}
