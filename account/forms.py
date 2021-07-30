@@ -1,8 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
-                                       SetPasswordForm)
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordResetForm,
+    SetPasswordForm,
+)
 
-from .models import UserBase
+from .models import Customer
 
 
 class UserLoginForm(AuthenticationForm):
@@ -22,7 +25,7 @@ class UserLoginForm(AuthenticationForm):
 
 
 class RegistrationForm(forms.ModelForm):
-    user_name = forms.CharField(label="Enter Username", min_length=4, max_length=50, help_text="Required")
+    name = forms.CharField(label="Enter Username", min_length=4, max_length=50, help_text="Required")
     email = forms.EmailField(
         max_length=100, help_text="Required", error_messages={"Required": "Sorry, you will need an email"}
     )
@@ -30,18 +33,18 @@ class RegistrationForm(forms.ModelForm):
     password2 = forms.CharField(label="Repeat password", widget=forms.PasswordInput)
 
     class Meta:
-        model = UserBase
+        model = Customer
         fields = (
-            "user_name",
+            "name",
             "email",
         )
 
     def clean_username(self):
-        user_name = self.cleaned_data["user_name"].lower()
-        r = UserBase.objects.filter(user_name=user_name)
+        name = self.cleaned_data["name"].lower()
+        r = Customer.objects.filter(name=name)
         if r.count():
             raise forms.ValidationError("Username already exists")
-        return user_name
+        return name
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -51,13 +54,13 @@ class RegistrationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if UserBase.objects.filter(email=email).exists():
+        if Customer.objects.filter(email=email).exists():
             raise forms.ValidationError("Please use another Email, that is already taken")
         return email
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["user_name"].widget.attrs.update({"class": "form-control mb-3", "placeholder": "Username"})
+        self.fields["name"].widget.attrs.update({"class": "form-control mb-3", "placeholder": "Username"})
         self.fields["email"].widget.attrs.update(
             {"class": "form-control mb-3", "placeholder": "E-mail", "name": "email", "id": "id_email"}
         )
@@ -74,8 +77,8 @@ class UserEditForm(forms.ModelForm):
             attrs={"class": "form-control mb-3", "placeholder": "email", "id": "form-email", "readonly": "readonly"}
         ),
     )
-    user_name = forms.CharField(
-        label="Username",
+    name = forms.CharField(
+        label="User name",
         min_length=4,
         max_length=50,
         widget=forms.TextInput(
@@ -83,7 +86,7 @@ class UserEditForm(forms.ModelForm):
         ),
     )
     first_name = forms.CharField(
-        label="Firstname",
+        label="First name",
         min_length=4,
         max_length=50,
         widget=forms.TextInput(
@@ -92,16 +95,16 @@ class UserEditForm(forms.ModelForm):
     )
 
     class Meta:
-        model = UserBase
+        model = Customer
         fields = (
             "email",
-            "user_name",
+            "name",
             "first_name",
         )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["user_name"].required = True
+        self.fields["name"].required = True
         self.fields["first_name"].required = True
         self.fields["email"].required = True
 
@@ -114,7 +117,7 @@ class PwdResetForm(PasswordResetForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        usr = UserBase.objects.filter(email=email)
+        usr = Customer.objects.filter(email=email)
         if not usr:
             raise forms.ValidationError("Unfortunatley we can not find that email address")
         return email
