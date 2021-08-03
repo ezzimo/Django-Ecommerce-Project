@@ -4,8 +4,36 @@ from django.contrib.auth.forms import (
     PasswordResetForm,
     SetPasswordForm,
 )
+from django.forms import fields
 
-from .models import Customer
+from .models import Address, Customer
+
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ["full_name", "phone", "address_line_1", "address_line_2", "town_city", "postcode"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["full_name"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "Full Name"}
+        )
+        self.fields["phone"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "phone"}
+        )
+        self.fields["address_line_1"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "address "}
+        )
+        self.fields["address_line_2"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "address"}
+        )
+        self.fields["town_city"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "town city"}
+        )
+        self.fields["postcode"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "Placeholder": "postcode"}
+        )
 
 
 class UserLoginForm(AuthenticationForm):
@@ -85,27 +113,16 @@ class UserEditForm(forms.ModelForm):
             attrs={"class": "form-control mb-3", "placeholder": "Username", "id": "form-firstname"}
         ),
     )
-    first_name = forms.CharField(
-        label="First name",
-        min_length=4,
-        max_length=50,
-        widget=forms.TextInput(
-            attrs={"class": "form-control mb-3", "placeholder": "Firstname", "id": "form-lastname"}
-        ),
-    )
-
     class Meta:
         model = Customer
         fields = (
             "email",
             "name",
-            "first_name",
         )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["name"].required = True
-        self.fields["first_name"].required = True
         self.fields["email"].required = True
 
 

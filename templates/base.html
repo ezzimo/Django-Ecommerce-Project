@@ -137,16 +137,16 @@
                             </li>
                             {% endfor %}
                         </ul>
-                    <h6 class="card-title"> My Account</h6>
-                    <ul class="list-group list-group-flush dropdown-account-link">
-                        {% if user.is_authenticated %}
-                        <a href="{% url "account:dashboard" %}" class="dropdown-item"> Your Account</a>
-                        <a href="#" class="dropdown-item"> Orders</a>
-                        <a href="{% url "account:logout" %}" class="dropdown-item">Logout</a>
-                        {% else %}
-                        <a href="{% url "account:login" %}" class="dropdown-item">Login</a>
-                        {% endif %}
-                    </ul>
+                        <h6 class="card-title"> My Account</h6>
+                        <ul class="list-group list-group-flush dropdown-account-link">
+                            {% if user.is_authenticated %}
+                            <a href="{% url "account:dashboard" %}" class="dropdown-item"> Your Account</a>
+                            <a href="#" class="dropdown-item"> Orders</a>
+                            <a href="{% url "account:logout" %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                            <a href="{% url "account:login" %}" class="dropdown-item">Login</a>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
                 <form class="d-flex w-100 d-md-none">
