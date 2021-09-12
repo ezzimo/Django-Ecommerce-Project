@@ -36,7 +36,7 @@ def edit_details(request):
 
 @login_required
 def delete_user(request):
-    user = UserBase.objects.get(user_name=request.user)
+    user = Customer.objects.get(user_name=request.user)
     user.is_active = False
     user.save()
     logout(request)
@@ -75,8 +75,8 @@ def account_register(request):
 def account_activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
-        user = UserBase.objects.get(pk=uid)
-    except ():
+        user = Customer.objects.get(pk=uid)
+    except:
         pass
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True

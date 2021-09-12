@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
 
+import django_heroku
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-SECRET_KEY = ""
+SECRET_KEY = "+j407t_$m*$hgr)yd5t&^fae3cot!*^+9@hwh+t9i^sw2$rlo0"
 
 DEBUG = True
 
@@ -106,7 +108,7 @@ CART_SESSION_ID = "cart"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 # Customized user model
-AUTH_USER_MODEL = "account.UserBase"
+AUTH_USER_MODEL = "account.Customer"
 LOGIN_REDIRECT_URL = "/account/dashboard"
 LOGIN_URL = "/account/login/"
 
@@ -122,3 +124,5 @@ STRIPE_SECRET_KEY = ""
 STRIPE_ENDPOINT_SECRET = ""
 
 # Stripe listen --forward-to localhost:8000/payment/webhook/
+# Activate Django-Heroku.
+django_heroku.settings(locals())
