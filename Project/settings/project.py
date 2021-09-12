@@ -10,7 +10,7 @@ SECRET_KEY = "+j407t_$m*$hgr)yd5t&^fae3cot!*^+9@hwh+t9i^sw2$rlo0"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["mydomain.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["https://tjg.herokuapp.com/", "127.0.0.1", "localhost"]
 
 
 INSTALLED_APPS = [
