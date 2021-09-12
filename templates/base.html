@@ -127,11 +127,7 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <ul class="navbar-nav me-auto mb-2 mb-md-0">
                             <li><a class="dropdown-item" href="{% url "ecommerce_store:product_all" %}">All</a></li>
-                            {% for c in categories %}
-                            <li {% if category.slug == c.slug %}class="selected" {% endif %}>
-                                <a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name|title }}</a>
-                            </li>
-                            {% endfor %}
+                            
                         </ul>
                         <h6 class="card-title"> My Account</h6>
                         <ul class="list-group list-group-flush dropdown-account-link">
