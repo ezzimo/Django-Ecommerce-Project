@@ -1,1 +1,1 @@
-web: gunicorn Project.wsgi
+web: gunicorn ECOMMERCE_STORE_DJANGO.wsgi
