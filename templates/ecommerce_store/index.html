@@ -1,40 +1,42 @@
-{% extends '../base.html' %}
+{% extends 'base.html' %}
 {% block title %} Store {% endblock  %}
 
 {% block content %}
 
 <div class="container">
-<div class="pb-3 h5"> All Products </div>
-{% if not products %}
+  <div class="pb-3 h5"> All Products </div>
+  {% if not products %}
   <div class="col-12"> There currently any products to show </div>
   {% else %}
-<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-  {% for product in products %}
-  <div class="col">
-    <div class="card mb-4 rounded-3 shadow-sm">
-      <div class="card-header py-3">
-        <a href="{{product.get_absolute_url}}">
-          <h4 class="my-0 fw-normal"> {{ product.title}} </h4>
-        </a>
-      </div>
-      <div class="card-body">
-      {% for image in product.product_image.all %}
-      {% if image.is_feature %}
-       <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="650" height="350" alt="{{image.image.alt_text}}">
-      {% endif %}
-      {% endfor %}
-       
-        <div class="list-unstyled mt-3 mb-4">
-          <p>
-            {{product.description}}
-          </p>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    {% for product in products %}
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+
+        <div class="card-header py-3">
+          <a href="{{product.get_absolute_url}}">
+            <h4 class="my-0 fw-normal"> {{ product.title}} </h4>
+          </a>
         </div>
-        <h1 class="card-title pricing-card-title">${{product.regular_price}}</h1>
+        <div class="card-body">
+          {% for image in product.product_image.all %}
+          {% if image.is_feature %}
+          <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="650" height="350"
+            alt="{{image.image.alt_text}}">
+          {% endif %}
+          {% endfor %}
+
+          <div class="list-unstyled mt-3 mb-4">
+            <p>
+              {{product.description}}
+            </p>
+          </div>
+          <h1 class="card-title pricing-card-title">${{product.regular_price}}</h1>
+        </div>
       </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
-{% endif %}
+  {% endif %}
 </div>
 {% endblock  %}

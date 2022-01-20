@@ -6,65 +6,75 @@
 {% endblock title %}
 
 {% block content %}
- <div class="container ">
-        <div class="row g-3">
-            <div class="col-12 d-flex justify-content-between border">
-            </div>
-            <div class="col-md-5 ps-3 col-lg-5 justify-content-md-center order-1 border price-info">
-                <div class="d-grid gap-2">
+<div class="container ">
+    {% if messages %}
+    <div class="alert alert-warning" alert="{{ message.tags}}" role="alert">
+        {% for message in messages %}
+            {{message|safe}} - <a href="{% url 'account:wishlist' %}" class="alert-link">Your Wish List</a>.
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row g-3">
+        <div class="col-12 d-flex justify-content-between border">
+        </div>
+        <div class="col-md-5 ps-3 col-lg-5 justify-content-md-center order-1 border price-info">
+            <div class="d-grid gap-2">
 
-                    <div class="d-flex d-flex-inline justify-content-between">
-                        <div><span class="h3">{{ product.regular_price }} DH</span>
-                            <p class="text-muted">includes tax</p>
-                        </div>
-                        <div class="">
-                            <label for="select">Qty</label>
-                            <select id="select" class="h6 select-dropdown">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
+                <div class="d-flex d-flex-inline justify-content-between">
+                    <div><span class="h3">{{ product.regular_price }} DH</span>
+                        <p class="text-muted">includes tax</p>
                     </div>
-                    <hr>
-                    <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">Add to
-                        cart</button>
-                    <button type="button" id="add-button" value="{{product.id}}" class="btn btn-light fw500">Add to
-                        Favorites</button>
+                    <div class="">
+                        <label for="select">Qty</label>
+                        <select id="select" class="h6 select-dropdown">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
                 </div>
+                <hr>
+                <button type="button" id="add-button" value="{{product.id}}" class="btn btn-success fw500">Add to
+                    cart</button>
+                <a href="{% url 'account:add_to_wishlist' product.id %}" class="btn btn-light fw500" role="button"
+                    aria-disabled="true">Add to
+                    Wish List</a>
             </div>
+        </div>
 
-            <div class="col-md-7 col-lg-7 p-0">
+        <div class="col-md-7 col-lg-7 p-0">
 
 
 
-                <div class="card mb-3 border-0">
-                    <div class="row g-0">
-                        <div class="col-md-12">
-                            <div class="card-body p-1">
-                                <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
-                                <div class="bg-light">
+            <div class="card mb-3 border-0">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-body p-1">
+                            <h1 class="mb-0 h2 pe-4 pb-4">{{ product.title }}</h1>
+                            <div class="bg-light">
                                 {% for image in product.product_image.all %}
                                 {% if image.is_feature %}
-                                <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="450px" height="150px" alt="{{image.image.alt_text}}">
+                                <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="450px"
+                                    height="150px" alt="{{image.image.alt_text}}">
                                 {% else %}
-                                <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="150px" height="75px" alt="{{image.image.alt_text}}">
-                                {% endif %} 
+                                <img class="img-fluid" alt="{{ product.title}}" src="{{ image.image.url}}" width="150px"
+                                    height="75px" alt="{{image.image.alt_text}}">
+                                {% endif %}
                                 {% endfor %}
-                                </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-
-
-
             </div>
 
+
+
         </div>
+
     </div>
+</div>
 <script>
     $(document).on('click', '#add-button', function (e) {
         e.preventDefault();
